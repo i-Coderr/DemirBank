@@ -1,0 +1,10 @@
+﻿{
+  "Descriptor": {
+    "UId": "31a6bdb6-fcc7-4924-8e8d-3172114cb7c0",
+    "Name": "UsrYacht",
+    "Type": 1,
+    "Maintainer": "Customer",
+    "ProjectPath": "Files/UsrYacht.csproj",
+    "DependsOn": []
+  }
+}
