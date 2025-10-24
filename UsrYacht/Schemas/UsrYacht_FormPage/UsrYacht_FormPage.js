@@ -3,6 +3,22 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 		viewConfigDiff: /**SCHEMA_VIEW_CONFIG_DIFF*/[
 			{
 				"operation": "merge",
+				"name": "CardContentWrapper",
+				"values": {
+					"padding": {
+						"left": "small",
+						"right": "small",
+						"top": "none",
+						"bottom": "none"
+					},
+					"visible": true,
+					"color": "transparent",
+					"borderRadius": "none",
+					"alignItems": "stretch"
+				}
+			},
+			{
+				"operation": "merge",
 				"name": "Tabs",
 				"values": {
 					"styleType": "default",
@@ -52,6 +68,27 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 						}
 					]
 				}
+			},
+			{
+				"operation": "insert",
+				"name": "PushMeButton",
+				"values": {
+					"type": "crt.Button",
+					"caption": "#ResourceString(PushMeButton_caption)#",
+					"color": "default",
+					"disabled": false,
+					"size": "medium",
+					"iconPosition": "left-icon",
+					"visible": true,
+					"icon": "checkmark-icon",
+					"clicked": {
+						"request": "usr.PushButtonRequest"
+					},
+					"clickMode": "default"
+				},
+				"parentName": "CardToggleContainer",
+				"propertyName": "items",
+				"index": 0
 			},
 			{
 				"operation": "insert",
@@ -278,7 +315,11 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					"label": "$Resources.Strings.PDS_UsrComment_xjf5mas",
 					"labelPosition": "auto",
 					"control": "$PDS_UsrComment_xjf5mas",
-					"multiline": false
+					"multiline": false,
+					"visible": false,
+					"readonly": false,
+					"placeholder": "",
+					"tooltip": ""
 				},
 				"parentName": "GridContainer_hmag1zg",
 				"propertyName": "items",
@@ -309,6 +350,33 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 			},
 			{
 				"operation": "insert",
+				"name": "Country",
+				"values": {
+					"layoutConfig": {
+						"column": 1,
+						"colSpan": 1,
+						"row": 5,
+						"rowSpan": 1
+					},
+					"type": "crt.ComboBox",
+					"label": "$Resources.Strings.PDS_UsrCountry_zdpxi9g",
+					"labelPosition": "auto",
+					"control": "$PDS_UsrCountry_zdpxi9g",
+					"listActions": [],
+					"showValueAsLink": false,
+					"controlActions": [],
+					"visible": true,
+					"readonly": false,
+					"placeholder": "",
+					"tooltip": "",
+					"valueDetails": null
+				},
+				"parentName": "GridContainer_hmag1zg",
+				"propertyName": "items",
+				"index": 8
+			},
+			{
+				"operation": "insert",
 				"name": "Number",
 				"values": {
 					"layoutConfig": {
@@ -329,7 +397,33 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 				},
 				"parentName": "GridContainer_hmag1zg",
 				"propertyName": "items",
-				"index": 8
+				"index": 9
+			},
+			{
+				"operation": "insert",
+				"name": "City",
+				"values": {
+					"layoutConfig": {
+						"column": 1,
+						"colSpan": 1,
+						"row": 6,
+						"rowSpan": 1
+					},
+					"type": "crt.ComboBox",
+					"label": "$Resources.Strings.PDS_UsrColumn13_eh1nmex",
+					"labelPosition": "auto",
+					"control": "$PDS_UsrColumn13_eh1nmex",
+					"listActions": [],
+					"showValueAsLink": false,
+					"controlActions": [],
+					"visible": true,
+					"readonly": false,
+					"placeholder": "",
+					"tooltip": ""
+				},
+				"parentName": "GridContainer_hmag1zg",
+				"propertyName": "items",
+				"index": 10
 			}
 		]/**SCHEMA_VIEW_CONFIG_DIFF*/,
 		viewModelConfigDiff: /**SCHEMA_VIEW_MODEL_CONFIG_DIFF*/[
@@ -393,6 +487,16 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 						"modelConfig": {
 							"path": "PDS.UsrNumber"
 						}
+					},
+					"PDS_UsrCountry_zdpxi9g": {
+						"modelConfig": {
+							"path": "PDS.UsrCountry"
+						}
+					},
+					"PDS_UsrColumn13_eh1nmex": {
+						"modelConfig": {
+							"path": "PDS.UsrColumn13"
+						}
 					}
 				}
 			},
@@ -432,7 +536,21 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 				}
 			}
 		]/**SCHEMA_MODEL_CONFIG_DIFF*/,
-		handlers: /**SCHEMA_HANDLERS*/[]/**SCHEMA_HANDLERS*/,
+		handlers: /**SCHEMA_HANDLERS*/[
+			{
+				request: "usr.PushButtonRequest",
+				/* Implementation of the custom query handler. */
+				handler: async (request, next) => {
+					console.log("Button works...");
+					Terrasoft.showInformation("My button was pressed.");
+					var price = await request.$context.PDS_UsrPrice_wn2lck2;
+					console.log("Price = " + price);
+					request.$context.PDS_UsrComment_xjf5mas = "Comment from JS code!";
+					/* Call the next handler if it exists and return its result. */
+					return next?.handle(request);
+				}
+			}
+		]/**SCHEMA_HANDLERS*/,
 		converters: /**SCHEMA_CONVERTERS*/{}/**SCHEMA_CONVERTERS*/,
 		validators: /**SCHEMA_VALIDATORS*/{}/**SCHEMA_VALIDATORS*/
 	};
