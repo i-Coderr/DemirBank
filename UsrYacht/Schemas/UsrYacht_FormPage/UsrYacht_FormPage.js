@@ -134,6 +134,29 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 			},
 			{
 				"operation": "insert",
+				"name": "TicketPrice",
+				"values": {
+					"layoutConfig": {
+						"column": 1,
+						"colSpan": 1,
+						"row": 3,
+						"rowSpan": 1
+					},
+					"type": "crt.NumberInput",
+					"label": "$Resources.Strings.PDS_UsrTicketPrice_ixibk3h",
+					"labelPosition": "auto",
+					"control": "$PDS_UsrTicketPrice_ixibk3h",
+					"visible": false,
+					"readonly": false,
+					"placeholder": "",
+					"tooltip": ""
+				},
+				"parentName": "SideAreaProfileContainer",
+				"propertyName": "items",
+				"index": 2
+			},
+			{
+				"operation": "insert",
 				"name": "GridContainer_hmag1zg",
 				"values": {
 					"type": "crt.GridContainer",
@@ -377,7 +400,7 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 			},
 			{
 				"operation": "insert",
-				"name": "Number",
+				"name": "ManagerEmail",
 				"values": {
 					"layoutConfig": {
 						"column": 2,
@@ -385,15 +408,16 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 						"row": 5,
 						"rowSpan": 1
 					},
-					"type": "crt.Input",
-					"label": "$Resources.Strings.PDS_UsrNumber_tm6qkt7",
+					"type": "crt.EmailInput",
+					"label": "#ResourceString(ManagerEmail_label)#",
+					"control": "$PDS_UsrManagerEmail_ld0bau8",
 					"labelPosition": "auto",
-					"control": "$PDS_UsrNumber_tm6qkt7",
-					"multiline": false,
-					"visible": true,
-					"readonly": true,
 					"placeholder": "",
-					"tooltip": ""
+					"tooltip": "",
+					"needHandleSave": false,
+					"caption": "#ResourceString(ManagerEmail_caption)#",
+					"readonly": true,
+					"visible": true
 				},
 				"parentName": "GridContainer_hmag1zg",
 				"propertyName": "items",
@@ -419,11 +443,36 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					"visible": true,
 					"readonly": false,
 					"placeholder": "",
-					"tooltip": ""
+					"tooltip": "",
+					"valueDetails": null
 				},
 				"parentName": "GridContainer_hmag1zg",
 				"propertyName": "items",
 				"index": 10
+			},
+			{
+				"operation": "insert",
+				"name": "Number",
+				"values": {
+					"layoutConfig": {
+						"column": 2,
+						"colSpan": 1,
+						"row": 6,
+						"rowSpan": 1
+					},
+					"type": "crt.Input",
+					"label": "$Resources.Strings.PDS_UsrNumber_tm6qkt7",
+					"labelPosition": "auto",
+					"control": "$PDS_UsrNumber_tm6qkt7",
+					"multiline": false,
+					"visible": true,
+					"readonly": true,
+					"placeholder": "",
+					"tooltip": ""
+				},
+				"parentName": "GridContainer_hmag1zg",
+				"propertyName": "items",
+				"index": 11
 			}
 		]/**SCHEMA_VIEW_CONFIG_DIFF*/,
 		viewModelConfigDiff: /**SCHEMA_VIEW_MODEL_CONFIG_DIFF*/[
@@ -446,6 +495,15 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					"PDS_UsrPrice_wn2lck2": {
 						"modelConfig": {
 							"path": "PDS.UsrPrice"
+						},
+						"validators": {
+							"MySuperValidator": {
+								"type": "usr.DGValidator",
+								"params": {
+									"minValue": 200,
+									"message": "#ResourceString(PriceCannotBeLess)#"
+								}
+							}
 						}
 					},
 					"PDS_UsrCaptain_81oskqo": {
@@ -456,11 +514,29 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					"PDS_UsrCrewCount_cwbsztk": {
 						"modelConfig": {
 							"path": "PDS.UsrCrewCount"
+						},
+						"validators": {
+							"MySuperValidator": {
+								"type": "usr.DGValidator",
+								"params": {
+									"minValue": 2,
+									"message": "#ResourceString(CrewCountCannotBeLess)#"
+								}
+							}
 						}
 					},
 					"PDS_UsrPassengersCount_fu0mw16": {
 						"modelConfig": {
 							"path": "PDS.UsrPassengersCount"
+						},
+						"validators": {
+							"MySuperValidator": {
+								"type": "usr.DGValidator",
+								"params": {
+									"minValue": 2,
+									"message": "#ResourceString(PassengersCountCannotBeLess)#"
+								}
+							}
 						}
 					},
 					"PDS_UsrDriveType_fku6jp9": {
@@ -495,7 +571,17 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					},
 					"PDS_UsrColumn13_eh1nmex": {
 						"modelConfig": {
-							"path": "PDS.UsrColumn13"
+							"path": "PDS.UsrCity"
+						}
+					},
+					"PDS_UsrTicketPrice_ixibk3h": {
+						"modelConfig": {
+							"path": "PDS.UsrTicketPrice"
+						}
+					},
+					"PDS_UsrManagerEmail_ld0bau8": {
+						"modelConfig": {
+							"path": "PDS.UsrManagerEmail_ld0bau8"
 						}
 					}
 				}
@@ -529,7 +615,13 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					"PDS": {
 						"type": "crt.EntityDataSource",
 						"config": {
-							"entitySchemaName": "UsrYacht"
+							"entitySchemaName": "UsrYacht",
+							"attributes": {
+								"UsrManagerEmail_ld0bau8": {
+									"path": "UsrManager.Email",
+									"type": "ForwardReference"
+								}
+							}
 						},
 						"scope": "page"
 					}
@@ -549,9 +641,56 @@ define("UsrYacht_FormPage", /**SCHEMA_DEPS*/[]/**SCHEMA_DEPS*/, function/**SCHEM
 					/* Call the next handler if it exists and return its result. */
 					return next?.handle(request);
 				}
+			}, 
+			{
+				request: "crt.HandleViewModelAttributeChangeRequest",
+				/* The custom implementation of the system query handler. */
+				handler: async (request, next) => {
+      				if (request.attributeName === 'PDS_UsrPrice_wn2lck2' || 		        // if price changed
+					   request.attributeName === 'PDS_UsrPassengersCount_fu0mw16' ) { 		// or Passenger count changed
+						let price = await request.$context.PDS_UsrPrice_wn2lck2;
+						let passengers = await request.$context.PDS_UsrPassengersCount_fu0mw16;
+						let ticket_price = price / passengers;
+						request.$context.PDS_UsrTicketPrice_ixibk3h = ticket_price;
+					}
+					/* Call the next handler if it exists and return its result. */
+					return next?.handle(request);
+				}
 			}
 		]/**SCHEMA_HANDLERS*/,
 		converters: /**SCHEMA_CONVERTERS*/{}/**SCHEMA_CONVERTERS*/,
-		validators: /**SCHEMA_VALIDATORS*/{}/**SCHEMA_VALIDATORS*/
+		validators: /**SCHEMA_VALIDATORS*/{
+			/* The validator type must contain a vendor prefix.
+			Format the validator type in PascalCase. */
+			"usr.DGValidator": {
+				validator: function (config) {
+					return function (control) {
+						let value = control.value;
+						let minValue = config.minValue;
+						let valueIsCorrect = value >= minValue;
+						var result;
+						if (valueIsCorrect) {
+							result = null;
+						} else {
+							result = {
+								"usr.DGValidator": { 
+									message: config.message
+								}
+							};
+						}
+						return result;
+					};
+				},
+				params: [
+					{
+						name: "minValue"
+					},
+					{
+						name: "message"
+					}
+				],
+				async: false
+			}
+		}/**SCHEMA_VALIDATORS*/
 	};
 });

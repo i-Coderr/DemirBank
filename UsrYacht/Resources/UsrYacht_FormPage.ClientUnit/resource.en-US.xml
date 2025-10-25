@@ -9,6 +9,11 @@
 			<Item Name="LocalizableStrings.addRecord_ajhsdxm_caption.Value" Value="Add new" />
 			<Item Name="LocalizableStrings.addRecord_ldftlf9_caption.Value" Value="Add new" />
 			<Item Name="LocalizableStrings.addRecord_svlrl01_caption.Value" Value="Add new" />
+			<Item Name="LocalizableStrings.CrewCountCannotBeLess.Value" Value="Crew count cannot be less than 2" />
+			<Item Name="LocalizableStrings.ManagerEmail_caption.Value" Value="Email address" />
+			<Item Name="LocalizableStrings.ManagerEmail_label.Value" Value="Manager Email " />
+			<Item Name="LocalizableStrings.PassengersCountCannotBeLess.Value" Value="Passengers cannot be less than 2" />
+			<Item Name="LocalizableStrings.PriceCannotBeLess.Value" Value="Price cannot be less than 200 EUR" />
 			<Item Name="LocalizableStrings.PushMeButton_caption.Value" Value="Push me!" />
 		</Items>
 	</Group>
